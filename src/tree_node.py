@@ -3,6 +3,7 @@ class TreeNode:
         self.is_leaf = is_leaf   # Boolean to indicate if the node is a leaf node
         self.keys = []           # List to hold the keys
         self.children = []       # List to hold the references to child nodes
+        self.next = None         # Reference to the next node (only applicable for leaf nodes)
 
     def insert(self, key, child=None):
         """Insert a key into the node. If it is an internal node, insert the child reference."""

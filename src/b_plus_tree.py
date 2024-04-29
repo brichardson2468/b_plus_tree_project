@@ -1,13 +1,21 @@
 from tree_node import TreeNode
 
 class BPlusTree:
-    def __init__(self, max_keys=4):
+    def __init__(self, max_keys=4): # Initialize the B+ tree with a maximum number of keys
         self.root = TreeNode(is_leaf=True)
         self.max_keys = max_keys  # Maximum keys a node can hold
 
-    def insert(self, key, record):
-        """Insert a key along with its record into the B+ tree."""
-        pass
+    def insert(self, key, record): # Insert a key and its associated record into the B+ tree
+        # Step 1: Find the leaf node where the key should be inserted
+        leaf = self._find_leaf(key)
+
+        # Step 2: Insert the key and the record into the leaf node
+        # Assuming the record is just a value that can be stored directly in keys for simplicity
+        leaf.insert(key, record)
+
+        # Step 3: Check if the node has overflowed and handle splits
+        if leaf.is_full(self.max_keys):
+            self._handle_split(leaf)
 
     def search(self, key):
         """Search for a key in the B+ tree and return its associated record."""
@@ -44,3 +52,15 @@ class BPlusTree:
             # Move to the next child node
             current_node = current_node.children[i]
         return current_node
+    
+    def _handle_split(self, node): # Helper method to handle node splits
+        # Recursively handle the splitting of nodes up to the root
+        new_node, mid_key = node.split()
+        if node == self.root:
+            # Special case: split the root
+            self._split_root()
+        else:
+            parent = node.parent
+            parent.insert(mid_key, new_node)
+            if parent.is_full(self.max_keys):
+                self._handle_split(parent)

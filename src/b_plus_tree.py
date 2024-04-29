@@ -17,17 +17,40 @@ class BPlusTree:
         if leaf.is_full(self.max_keys):
             self._handle_split(leaf)
 
-    def search(self, key):
-        """Search for a key in the B+ tree and return its associated record."""
-        pass
+    def search(self, key): # Search for a key in the B+ tree and return its associated record
+        current_node = self.root
+        while not current_node.is_leaf:
+            i = 0
+            while i < len(current_node.keys) and key >= current_node.keys[i]:
+                i += 1
+            current_node = current_node.children[i]
+        # At the leaf node, look for the key
+        if key in current_node.keys:
+            return current_node.records[current_node.keys.index(key)]
+        else:
+            return None
 
     def delete(self, key):
         """Delete a key from the B+ tree."""
         pass
 
-    def search_range(self, start_key, end_key):
-        """Search for all records within a specified range."""
-        pass
+    def search_range(self, start_key, end_key): 
+        # Search for keys within a given range and return their associated records
+        current_node = self.root
+        results = []
+        # Traverse to the leaf node for the start_key
+        while not current_node.is_leaf:
+            i = 0
+            while i < len(current_node.keys) and start_key >= current_node.keys[i]:
+                i += 1
+            current_node = current_node.children[i]
+        # Collect all records from start_key to end_key
+        while current_node:
+            for key, record in zip(current_node.keys, current_node.records):
+                if start_key <= key <= end_key:
+                    results.append(record)
+            current_node = current_node.next
+        return results
 
     def _split_root(self): # Helper method to split the root node
         old_root = self.root

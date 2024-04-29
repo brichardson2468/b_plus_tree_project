@@ -1,12 +1,13 @@
 from b_plus_tree import max_keys
 
 class TreeNode:
-    def __init__(self, is_leaf=False, parent=None):
-        self.is_leaf = is_leaf   # Boolean to indicate if the node is a leaf node
-        self.keys = []           # List to hold the keys
-        self.children = []       # List to hold the references to child nodes
-        self.next = None         # Reference to the next node (only applicable for leaf nodes)
-        self.parent = parent     # Reference to the parent node
+    def __init__(self, keys=None, children=None, is_leaf=False, parent=None):
+        self.keys = keys if keys is not None else []
+        self.records = {}  # Dictionary to hold lists of records for each key
+        self.children = children if children is not None else []
+        self.is_leaf = is_leaf
+        self.next = None  # For leaf nodes, pointer to next leaf node
+        self.parent = parent
 
     def insert(self, key, child=None):
         # Find the position where the new key should be inserted

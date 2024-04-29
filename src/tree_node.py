@@ -1,6 +1,7 @@
-from b_plus_tree import max_keys
 
 class TreeNode:
+    max_keys = 4
+    
     def __init__(self, keys=None, children=None, is_leaf=False, parent=None):
         self.keys = keys if keys is not None else []
         self.records = {}  # Dictionary to hold lists of records for each key
@@ -24,7 +25,7 @@ class TreeNode:
             child.parent = self # Update the parent reference of the child node
         
         # Check if the node is full and needs to be split
-        if self.is_full(max_keys):  # Assuming max_keys is defined or passed to the method
+        if self.is_full(self.max_keys):  # Split the node
             return self.split()
 
     def split(self): # Helper method to split the node
@@ -52,5 +53,5 @@ class TreeNode:
         
         return new_node, mid_key
 
-    def is_full(self, max_keys): # Helper method to check if the node is full
-        return len(self.keys) >= max_keys
+    def is_full(self): # Helper method to check if the node is full
+        return len(self.keys) >= self.max_keys

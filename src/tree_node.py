@@ -1,11 +1,12 @@
 from b_plus_tree import max_keys
 
 class TreeNode:
-    def __init__(self, is_leaf=False):
+    def __init__(self, is_leaf=False, parent=None):
         self.is_leaf = is_leaf   # Boolean to indicate if the node is a leaf node
         self.keys = []           # List to hold the keys
         self.children = []       # List to hold the references to child nodes
         self.next = None         # Reference to the next node (only applicable for leaf nodes)
+        self.parent = parent     # Reference to the parent node
 
     def insert(self, key, child=None):
         # Find the position where the new key should be inserted
@@ -19,6 +20,7 @@ class TreeNode:
         # If this is not a leaf node, insert the child reference as well
         if not self.is_leaf:
             self.children.insert(i + 1, child)
+            child.parent = self # Update the parent reference of the child node
         
         # Check if the node is full and needs to be split
         if self.is_full(max_keys):  # Assuming max_keys is defined or passed to the method
@@ -29,7 +31,7 @@ class TreeNode:
         mid_key = self.keys[mid_index]
 
         # Create a new node
-        new_node = TreeNode(is_leaf=self.is_leaf)
+        new_node = TreeNode(is_leaf=self.is_leaf, parent=self.parent)
         new_node.keys = self.keys[mid_index + 1:]
         self.keys = self.keys[:mid_index]
         
@@ -43,6 +45,9 @@ class TreeNode:
             # If it's not a leaf, move the child references
             new_node.children = self.children[mid_index + 1:]
             self.children = self.children[:mid_index + 1]
+
+            for child in new_node.children: # Update the parent reference of the child nodes
+                child.parent = new_node
         
         return new_node, mid_key
 

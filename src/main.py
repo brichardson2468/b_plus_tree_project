@@ -39,4 +39,7 @@ def main():
         print("No records found for the given date.")
 
 if __name__ == '__main__':
+    # Create or overwrite the temp directory
+    with open('temp/search_result.csv', 'w') as f:
+        f.write("")
     main()

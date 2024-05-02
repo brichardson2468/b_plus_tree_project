@@ -32,7 +32,7 @@ def main():
 
 
         # Open the Jupyter Notebook
-        notebook_path = '../notebooks/data_visualization.ipynb'
+        notebook_path = 'notebooks/data_visualization.ipynb'
         subprocess.run(f"jupyter notebook {notebook_path}", shell=True)
 
     else:

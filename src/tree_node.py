@@ -25,7 +25,7 @@ class TreeNode:
             child.parent = self # Update the parent reference of the child node
         
         # Check if the node is full and needs to be split
-        if self.is_full(self.max_keys):  # Split the node
+        if self.is_full():  # Split the node
             return self.split()
 
     def split(self): # Helper method to split the node

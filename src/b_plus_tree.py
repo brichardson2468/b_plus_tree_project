@@ -15,7 +15,7 @@ class BPlusTree:
         leaf.insert(key, record)
 
         # Step 3: Check if the node has overflowed and handle splits
-        if leaf.is_full(self.max_keys):
+        if leaf.is_full():
             self._handle_split(leaf)
 
     def search(self, key): # Search for a key in the B+ tree and return its associated record

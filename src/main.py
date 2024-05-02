@@ -35,11 +35,6 @@ def main():
         pd.DataFrame([search_result]).to_csv(temp_path, index=False)
         print(f"Search result saved to {temp_path}")
 
-
-        # Open the Jupyter Notebook
-        notebook_path = 'notebooks/data_visualization.ipynb'
-        subprocess.run(f"jupyter notebook {notebook_path}", shell=True)
-
     else:
         print("No records found for the given date.")
 

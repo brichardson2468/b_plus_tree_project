@@ -26,6 +26,9 @@ def main():
     if search_result:
         # Save the search result to a temporary file
         temp_path = 'temp/search_result.csv'
+        os.makedirs(os.path.dirname(temp_path), exist_ok=True)
+        pd.DataFrame([search_result]).to_csv(temp_path, index=False)
+        print(f"Search result saved to {temp_path}")
 
 
         # Open the Jupyter Notebook

@@ -1,8 +1,7 @@
 from utils import load_data
 from b_plus_tree import BPlusTree
 import pandas as pd
-import subprocess
-import os
+
 
 
 def main():
@@ -29,9 +28,11 @@ def main():
     print(f"Search result for {search_date}: {search_result}")
 
     if search_result:
-        # Save the search result to a file
-        results_path = 'temp/search_results.csv'
-        pd.DataFrame([search_result]).to_csv(results_path, index=False)
+        # Convert search_result to DataFrame
+        results_df = pd.DataFrame(search_result)
+        results_path = 'data/search_results.csv'
+        # Ensure the columns match the original data
+        results_df.to_csv(results_path, index=False)
         print(f"Search result saved to {results_path}")
 
     else:

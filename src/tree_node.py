@@ -10,7 +10,7 @@ class TreeNode:
         self.next = None  # For leaf nodes, pointer to next leaf node
         self.parent = parent
 
-    def insert(self, key, child=None):
+    def insert(self, key, record=None, child=None):
         # Find the position where the new key should be inserted
         i = 0
         while i < len(self.keys) and self.keys[i] < key:
@@ -19,10 +19,14 @@ class TreeNode:
         # Insert the key at the found position
         self.keys.insert(i, key)
         
+         # If this is a leaf node, insert the record as well
+        if self.is_leaf:
+            self.records[key] = record
         # If this is not a leaf node, insert the child reference as well
-        if not self.is_leaf:
+        else:
             self.children.insert(i + 1, child)
-            child.parent = self # Update the parent reference of the child node
+            if child is not None:
+                child.parent = self # Update the parent reference of the child node
         
         # Check if the node is full and needs to be split
         if self.is_full():  # Split the node

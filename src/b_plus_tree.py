@@ -6,13 +6,22 @@ class BPlusTree:
         self.max_keys = max_keys  # Maximum keys a node can hold
         self.min_keys = max_keys // 2 # Minimum keys a node can hold
 
-    def insert(self, key, record): # Insert a key and its associated record into the B+ tree
+    def insert(self, key, row): # Insert a key and its associated record into the B+ tree
         # Step 1: Find the leaf node where the key should be inserted
         leaf = self._find_leaf(key)
 
-        # Step 2: Insert the key and the record into the leaf node
-        # Assuming the record is just a value that can be stored directly in keys for simplicity
-        leaf.insert(key, record)
+        # Step 2: Check if the key already exists in the leaf node
+        if key in leaf.records:
+            # If the key exists, check if the associated record is a list
+            if isinstance(leaf.records[key], list):
+                # If it's a list, append the new record to the list
+                leaf.records[key].append(row)
+            else:
+                # If it's not a list, create a new list with the existing record and the new record
+                leaf.records[key] = [leaf.records[key], row]
+        # If the key does not exist, insert the key and the record into the leaf node
+        else:
+            leaf.insert(key, row)
 
         # Step 3: Check if the node has overflowed and handle splits
         if leaf.is_full():
@@ -20,33 +29,26 @@ class BPlusTree:
 
     def search(self, key): # Search for a key in the B+ tree and return its associated record
         current_node = self.root
+        print("Starting search at root.")
         while not current_node.is_leaf:
             i = 0
             while i < len(current_node.keys) and key >= current_node.keys[i]:
                 i += 1
+            print(f"Moving to child {i} at level with keys {current_node.keys}")
             current_node = current_node.children[i]
+            if current_node is None:
+                return None
         # At the leaf node, look for the key
+        print(f"At leaf node with keys {current_node.keys}")
         if key in current_node.keys:
-            return current_node.records[current_node.keys.index(key)]
+            if key in current_node.records:
+                return current_node.records[key]
+            else:
+                print(f"Key {key} not found in records.")
+                return None
         else:
+            print(f"Key {key} not found in leaf node with keys {current_node.keys}.")
             return None
-
-    def delete(self, key):
-        # Step 1: Find the leaf node where the key should be deleted
-        leaf = self._find_leaf(key)
-        if key not in leaf.keys:
-            return False  # Key not found
-        
-        # Step 2: Remove the key
-        index = leaf.keys.index(key)
-        leaf.keys.pop(index)
-        leaf.records.pop(index)  # Assuming records are stored in a list parallel to keys
-
-        # Step 3: Handle underflow
-        if len(leaf.keys) < self.min_keys:  # Assuming min_keys is defined
-            self._handle_underflow(leaf)
-
-        return True
 
     def search_range(self, start_key, end_key): 
         # Search for keys within a given range and return their associated records

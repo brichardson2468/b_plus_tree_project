@@ -17,7 +17,11 @@ def main():
         bpt.insert(row['Time Period Start Date'], row)
 
     # Ask user for a date to search
-    search_date = pd.Timestamp(input("Enter a date to search (YYYY-MM-DD): "))
+    try:
+        search_date = pd.Timestamp(input("Enter a date to search (YYYY-MM-DD): "))
+    except ValueError:
+        print("Invalid date format. Please enter a date in the format YYYY-MM-DD.")
+        return
 
     # Search for the date in the B+ Tree
     search_result = bpt.search(search_date)

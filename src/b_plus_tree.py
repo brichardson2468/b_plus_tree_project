@@ -1,4 +1,5 @@
 from tree_node import TreeNode
+import pandas as pd
 
 class BPlusTree:
     def __init__(self, max_keys=4): # Initialize the B+ tree with a maximum number of keys
@@ -51,11 +52,13 @@ class BPlusTree:
             return None
         
     def search_date_in_range(self, target_date):
+        target_date = pd.Timestamp(target_date)
+        print(target_date)
         current_node = self.root
         # Traverse down to find the appropriate leaf node
         while not current_node.is_leaf:
             i = 0
-            while i < len(current_node.keys) and target_date >= current_node.keys[i]:
+            while i < len(current_node.keys) and target_date >= current_node.keys[i].date():
                 i += 1
             current_node = current_node.children[i]
 
@@ -63,11 +66,15 @@ class BPlusTree:
         results = []
         while current_node:
             for key in current_node.keys:
-                if key > target_date:
+                if key.date() > target_date.date():
                     break
-                start_date, end_date = key, current_node.records[key][-1]['Time Period End Date']
-                if start_date <= target_date <= end_date:
-                    results.extend(current_node.records[key])
+                for record in current_node.records[key]:
+                    start_date = pd.Timestamp(record['Time Period Start Date'])
+                    print(start_date)
+                    end_date = pd.Timestamp(record['Time Period End Date'])
+                    print(end_date)
+                    if start_date <= target_date <= end_date:
+                        results.append(record)
             current_node = current_node.next
         return results
 

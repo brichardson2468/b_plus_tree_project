@@ -68,6 +68,23 @@ class BPlusTree:
             current_node = current_node.next
         return results
 
+    def delete(self, key):
+        # Step 1: Find the leaf node where the key is located
+        leaf_node = self._find_leaf(key)
+
+        # Check if the key exists in the leaf node
+        if key not in leaf_node.keys:
+            raise KeyError(f"Key {key} not found in the B+ tree.")
+
+        # Step 2: Delete the key from the leaf node
+        key_index = leaf_node.keys.index(key)
+        leaf_node.keys.pop(key_index)
+        leaf_node.records.pop(key_index)
+
+        # Step 3: If the leaf node is underfull after the deletion, handle the underflow
+        if len(leaf_node.keys) < self.min_keys:
+            self._handle_underflow(leaf_node)
+    
     def _split_root(self): # Helper method to split the root node
         old_root = self.root
         # Split the old root

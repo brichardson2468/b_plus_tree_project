@@ -49,6 +49,27 @@ class BPlusTree:
         else:
             print(f"Key {key} not found in leaf node with keys {current_node.keys}.")
             return None
+        
+    def search_date_in_range(self, target_date):
+        current_node = self.root
+        # Traverse down to find the appropriate leaf node
+        while not current_node.is_leaf:
+            i = 0
+            while i < len(current_node.keys) and target_date >= current_node.keys[i]:
+                i += 1
+            current_node = current_node.children[i]
+
+        # Now traverse the leaf nodes to find the target date
+        results = []
+        while current_node:
+            for key in current_node.keys:
+                if key > target_date:
+                    break
+                start_date, end_date = key, current_node.records[key][-1]['Time Period End Date']
+                if start_date <= target_date <= end_date:
+                    results.extend(current_node.records[key])
+            current_node = current_node.next
+        return results
 
     def search_range(self, start_key, end_key): 
         # Search for keys within a given range and return their associated records

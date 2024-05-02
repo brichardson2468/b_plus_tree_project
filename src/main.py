@@ -29,17 +29,13 @@ def main():
     print(f"Search result for {search_date}: {search_result}")
 
     if search_result:
-        # Save the search result to a temporary file
-        temp_path = 'temp/search_result.csv'
-        os.makedirs(os.path.dirname(temp_path), exist_ok=True)
-        pd.DataFrame([search_result]).to_csv(temp_path, index=False)
-        print(f"Search result saved to {temp_path}")
+        # Save the search result to a file
+        results_path = 'temp/search_results.csv'
+        pd.DataFrame([search_result]).to_csv(results_path, index=False)
+        print(f"Search result saved to {results_path}")
 
     else:
         print("No records found for the given date.")
 
 if __name__ == '__main__':
-    # Create or overwrite the temp directory
-    with open('temp/search_result.csv', 'w') as f:
-        f.write("")
     main()

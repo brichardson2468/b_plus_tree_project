@@ -42,9 +42,9 @@ class BPlusTree:
             current_node = current_node.children[i]
         # Collect all records from start_key to end_key
         while current_node:
-            for key, record in zip(current_node.keys, current_node.records):
+            for key in current_node.keys:
                 if start_date <= key[0] and key[1] <= end_date:
-                    results.append(record)
+                    results.extend(current_node.records[key])
             current_node = current_node.next
         return results
     

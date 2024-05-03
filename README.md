@@ -7,7 +7,7 @@ A B+ tree is a type of self-balancing tree data structure that maintains sorted 
 
 For temporal data, such as dates or timestamps, B+ trees are advantageous because they can effectively handle range queries, which are common with time-based data. This capability allows for quick searches over intervals (e.g., finding all events within a specific date range), making B+ trees a good choice for databases and file systems where such queries are frequent.
 # Project Description
-
+My project primarily acts as a data storage, loading, and parsing implementation that aids the primary data visualization task. When trying to visualize the data, I was running into issues narrowing down into smaller datasets to get a more focused look. This project solved that problem by allowing me to quickly create a new dataset for the exact dates I wanted and immediately visualize with a single click. 
 # Installation
 ### To set up this project locally, follow these steps:
 ### 1. Clone the repository:

@@ -1,8 +1,9 @@
-### B+ Tree Project
+# B+ Tree Project
 ## Data Structures Semester Project on B+ Trees
-# Motivation
+### Motivation
 My motivation is...
-# Description
+### About B+ Trees
+# Project Description
 
 # Installation
 

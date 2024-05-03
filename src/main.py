@@ -35,12 +35,14 @@ def main():
         bpt.insert(key, row)
 
     # Ask user for a date to search
-    date_input = input("Enter a date to search (YYYY-MM-DD): ")
-    target_date = parse_date(date_input)
-    if target_date:
+    start_date_input = input("Enter the start date (YYYY-MM-DD): ")
+    end_date_input = input("Enter the end date (YYYY-MM-DD): ")
+    start_date = parse_date(start_date_input)
+    end_date = parse_date(end_date_input)
+    if start_date and end_date:
         # Search for the date in the B+ Tree
-        search_result = bpt.search_range(target_date)
-        print(f"Search results for {target_date}: {search_result}")
+        search_result = bpt.search_range(start_date, end_date)
+        print(f"Search results between {start_date} and {end_date}: {search_result}")
 
         if search_result:
             # Convert search_result to DataFrame

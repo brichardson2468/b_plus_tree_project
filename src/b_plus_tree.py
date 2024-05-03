@@ -106,23 +106,6 @@ class BPlusTree:
                     results.append(record)
             current_node = current_node.next
         return results
-
-    def delete(self, key):
-        # Step 1: Find the leaf node where the key is located
-        leaf_node = self._find_leaf(key)
-
-        # Check if the key exists in the leaf node
-        if key not in leaf_node.keys:
-            raise KeyError(f"Key {key} not found in the B+ tree.")
-
-        # Step 2: Delete the key from the leaf node
-        key_index = leaf_node.keys.index(key)
-        leaf_node.keys.pop(key_index)
-        leaf_node.records.pop(key_index)
-
-        # Step 3: If the leaf node is underfull after the deletion, handle the underflow
-        if len(leaf_node.keys) < self.min_keys:
-            self._handle_underflow(leaf_node)
     
     def _split_root(self): # Helper method to split the root node
         old_root = self.root
@@ -161,69 +144,3 @@ class BPlusTree:
             if parent.is_full(self.max_keys):
                 self._handle_split(parent)
 
-    def _handle_underflow(self, node):
-        parent = node.parent
-        left_sibling = None
-        right_sibling = None
-        index = 0
-
-        # Find node's position in parent's children list and identify siblings
-        if parent:
-            index = parent.children.index(node)
-            if index > 0:
-                left_sibling = parent.children[index - 1]
-            if index < len(parent.children) - 1:
-                right_sibling = parent.children[index + 1]
-
-        # Try to borrow from the left sibling
-        if left_sibling and len(left_sibling.keys) > self.min_keys:
-            self._borrow_from_left(node, left_sibling, parent, index)
-            return
-
-        # Try to borrow from the right sibling
-        if right_sibling and len(right_sibling.keys) > self.min_keys:
-            self._borrow_from_right(node, right_sibling, parent, index)
-            return
-
-        # If borrowing is not possible, merge with a sibling
-        if left_sibling:
-            self._merge_nodes(left_sibling, node, parent, index - 1)
-        elif right_sibling:
-            self._merge_nodes(node, right_sibling, parent, index)
-
-    def _borrow_from_left(self, node, left_sibling, parent, index):
-        # Borrow the last key from the left sibling
-        borrow_key = left_sibling.keys.pop(-1)
-        borrow_record = left_sibling.records.pop(-1)
-        node.keys.insert(0, borrow_key)
-        node.records.insert(0, borrow_record)
-
-        # Update parent key
-        parent.keys[index - 1] = node.keys[0]
-
-    def _borrow_from_right(self, node, right_sibling, parent, index):
-        # Borrow the first key from the right sibling
-        borrow_key = right_sibling.keys.pop(0)
-        borrow_record = right_sibling.records.pop(0)
-        node.keys.append(borrow_key)
-        node.records.append(borrow_record)
-
-        # Update parent key
-        parent.keys[index] = right_sibling.keys[0]
-
-    def _merge_nodes(self, left, right, parent, parent_index):
-        # Merge right node into left node
-        left.keys.extend(right.keys)
-        left.records.extend(right.records)
-        if left.is_leaf:
-            left.next = right.next
-        else:
-            left.children.extend(right.children)
-
-        # Remove the right node and the parent key
-        parent.keys.pop(parent_index)
-        parent.children.pop(parent_index + 1)
-
-        # If parent is underfull, handle underflow
-        if len(parent.keys) < self.min_keys:
-            self._handle_underflow(parent)

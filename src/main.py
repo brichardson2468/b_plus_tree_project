@@ -34,8 +34,11 @@ def main():
         bpt.insert(key, row)
 
     # Ask user for a date to search
-    start_date_input = input("Enter the start date (YYYY-MM-DD): ")
-    end_date_input = input("Enter the end date (YYYY-MM-DD): ")
+    print("Welcome to my data searching, retrieval, and visualization program!")
+    print("The dataset starts on 2020-04-23 and ends on 2024-03-04.")
+    print("Think of a date range you want to search for in the data and be able to visualize!")
+    start_date_input = input("Enter the start date you want (YYYY-MM-DD): ")
+    end_date_input = input("Enter the end date you want (YYYY-MM-DD): ")
     start_date = parse_date(start_date_input)
     end_date = parse_date(end_date_input)
     if start_date and end_date:
@@ -51,7 +54,11 @@ def main():
             results_df.sort_values(by=['Time Period Start Date'], inplace=True)
             results_path = 'data/search_results.csv'
             results_df.to_csv(results_path, index=False)
-            print(f"Search results saved to {results_path}")
+            print("Overwriting the previous search results file...")
+            print(f"Your search results have been saved to {results_path}!")
+            print(f"Open up {results_path} to view your search results.")
+            print("Then you can run the notebook to visualize your chosen date range.")
+            print("Thank you for using my program!")
         else:
             print("No records found within the range for the given date.")
     else:

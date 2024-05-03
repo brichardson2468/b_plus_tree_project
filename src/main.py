@@ -41,7 +41,6 @@ def main():
     if start_date and end_date:
         # Search for the date in the B+ Tree
         search_result = bpt.search_range(start_date, end_date)
-        print(f"Search results between {start_date} and {end_date}: {search_result}")
 
         if search_result:
             # Convert search_result to DataFrame

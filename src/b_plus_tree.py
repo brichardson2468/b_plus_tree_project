@@ -41,12 +41,10 @@ class BPlusTree:
             current_node = current_node.children[i]
         while current_node:
         # Collect all records from start_key to end_key
-            print(f"Current node keys: {current_node.keys}")
             for key in current_node.keys:
                 if start_date <= key[1] and key[0] <= end_date:
                     if key in current_node.records:
                         results.extend(current_node.records[key])
-                        print(f"Added records for key: {key}")
             current_node = current_node.next
         return results
     
@@ -76,7 +74,6 @@ class BPlusTree:
     
     def _handle_split(self, node): # Helper method to handle node splits
         # Recursively handle the splitting of nodes up to the root
-        print(f"Handling split for node with keys: {node.keys}")
         new_node, mid_key = node.split()
         if node == self.root:
             # Special case: split the root

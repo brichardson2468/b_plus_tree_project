@@ -11,7 +11,7 @@ class TreeNode:
         self.parent = parent
 
     def insert(self, key, record=None, child=None):
-        print(f"Inserting key: {key} with record: {record}")
+        #print(f"Inserting key: {key} with record: {record}")
         # Find the position where the new key should be inserted
         i = 0
         while i < len(self.keys) and self.keys[i] < key:
@@ -33,7 +33,7 @@ class TreeNode:
 
         if self.is_full():
             return self.split()
-        print(f"Record under key {key} now is {self.records[key]}")
+        #print(f"Record under key {key} now is {self.records[key]}")
 
     def split(self): # Helper method to split the node
         mid_index = len(self.keys) // 2
@@ -41,18 +41,18 @@ class TreeNode:
 
         # Create a new node
         new_node = TreeNode(is_leaf=self.is_leaf, parent=self.parent)
-        new_node.keys = self.keys[mid_index + 1:]
-        self.keys = self.keys[:mid_index]
-        
         if self.is_leaf:
-            # If it's a leaf node, adjust the next pointers
-            new_node.children = self.children[mid_index + 1:]
-            self.children = self.children[:mid_index]
+            # It's a leaf node, distribute keys and associated records
+            new_node.keys = self.keys[mid_index:]
+            new_node.records = {key: self.records.pop(key) for key in new_node.keys}
             new_node.next = self.next
             self.next = new_node
+            self.keys = self.keys[:mid_index]
         else:
             # If it's not a leaf, move the child references
+            new_node.keys = self.keys[mid_index + 1:]
             new_node.children = self.children[mid_index + 1:]
+            self.keys = self.keys[:mid_index]
             self.children = self.children[:mid_index + 1]
 
             for child in new_node.children: # Update the parent reference of the child nodes

@@ -31,14 +31,15 @@ def main():
 
     # Insert data into B+ Tree
     for index, row in data.iterrows():
-        bpt.insert(parse_date(row['Time Period Start Date']), row)
+        key = (parse_date(row['Time Period Start Date']), parse_date(row['Time Period End Date']))
+        bpt.insert(key, row)
 
     # Ask user for a date to search
     date_input = input("Enter a date to search (YYYY-MM-DD): ")
     target_date = parse_date(date_input)
     if target_date:
         # Search for the date in the B+ Tree
-        search_result = bpt.search_date_in_range(target_date)
+        search_result = bpt.search_range(target_date)
         print(f"Search results for {target_date}: {search_result}")
 
         if search_result:

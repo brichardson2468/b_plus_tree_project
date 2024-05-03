@@ -29,42 +29,6 @@ class BPlusTree:
         # Step 3: Check if the node has overflowed and handle splits
         if leaf.is_full():
             self._handle_split(leaf)
-        
-    def search_date_in_range(self, target_date):
-        target_date = pd.to_datetime(target_date).date()
-        print("Target date for search:", target_date)
-        current_node = self.root
-
-        # Traverse down to find the appropriate leaf node
-        while not current_node.is_leaf:
-            i = 0
-            while i < len(current_node.keys) and target_date >= pd.Timestamp(current_node.keys[i]):
-                #print("Current node key being compared:", current_node.keys[i])
-                i += 1
-            current_node = current_node.children[i]
-            #print("Moved to child node:", i)
-
-        # Now traverse the leaf nodes to find the target date
-        results = []
-        while current_node:
-            # Assuming the first key in a node gives the minimum date
-            if current_node.keys and (current_node.keys[0]) > target_date:
-                print("Stopping search, keys in node are past the target date.")
-                break
-
-            for key in current_node.keys:
-                #print("Leaf node key:", key)  # Check keys in the leaf node
-                if key in current_node.records:
-                    for record in current_node.records[key]:
-                        start_date = pd.to_datetime(record['Time Period Start Date']).date()
-                        end_date = pd.to_datetime(record['Time Period End Date']).date()
-                        #print("Start Date:", start_date, "End Date:", end_date)
-                        if start_date <= target_date <= end_date:
-                            results.append(record)
-            current_node = current_node.next
-
-        print("Collected results:", results)
-        return results
 
     def search_range(self, start_key, end_key): 
         # Search for keys within a given range and return their associated records

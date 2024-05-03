@@ -10,7 +10,7 @@ class BPlusTree:
 
     def insert(self, key, row): # Insert a key and its associated record into the B+ tree
         # Step 1: Find the leaf node where the key should be inserted
-        print(f"Inserting key {key} with row data")
+        #print(f"Inserting key {key} with row data")
         leaf = self._find_leaf(key)
 
         # Step 2: Check if the key already exists in the leaf node
@@ -40,11 +40,15 @@ class BPlusTree:
             while i < len(current_node.keys) and start_date >= current_node.keys[i][0]:
                 i += 1
             current_node = current_node.children[i]
-        # Collect all records from start_key to end_key
         while current_node:
+        # Collect all records from start_key to end_key
+            print(f"Current node keys: {current_node.keys}")
             for key in current_node.keys:
-                if start_date <= key[0] and key[1] <= end_date:
-                    results.extend(current_node.records[key])
+                print(f"Checking key: {key}, Record exists: {key in current_node.records}")
+                if start_date <= key[1] and key[0] <= end_date:
+                    if key in current_node.records:
+                        results.extend(current_node.records[key])
+                        print(f"Added records for key: {key}")
             current_node = current_node.next
         return results
     

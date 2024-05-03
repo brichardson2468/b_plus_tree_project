@@ -9,11 +9,11 @@ My motivation for this project was incorporating a data set I was using for my d
 
 # Installation
 ### To set up this project locally, follow these steps:
-1. Clone the repository
+### 1. Clone the repository:
     git clone https://github.com/brichardson2468/b_plus_tree_project.git
-2. Navigate to the project directory:
+### 2. Navigate to the project directory:
     cd b_plus_tree_project
-3. Install the required Python packages:
+### 3. Install the required Python packages:
     pip install -r requirements.txt
 # Usage
 ### Run the application using:

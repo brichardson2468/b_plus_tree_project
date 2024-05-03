@@ -11,7 +11,6 @@ class TreeNode:
         self.parent = parent
 
     def insert(self, key, record=None, child=None):
-        #print(f"Inserting key: {key} with record: {record}")
         # Find the position where the new key should be inserted
         i = 0
         while i < len(self.keys) and self.keys[i] < key:
@@ -33,7 +32,6 @@ class TreeNode:
 
         if self.is_full():
             return self.split()
-        #print(f"Record under key {key} now is {self.records[key]}")
 
     def split(self): # Helper method to split the node
         mid_index = len(self.keys) // 2

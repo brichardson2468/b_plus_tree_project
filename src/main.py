@@ -1,13 +1,12 @@
 from b_plus_tree import BPlusTree
 import pandas as pd
-import datetime
 
 def load_data(filepath):
     try:
         data = pd.read_csv(filepath)
         print("Data loaded successfully!")
-        data['Time Period Start Date'] = pd.to_datetime(data['Time Period Start Date'])
-        data['Time Period End Date'] = pd.to_datetime(data['Time Period End Date'])
+        data['Time Period Start Date'] = pd.to_datetime(data['Time Period Start Date']).dt.date
+        data['Time Period End Date'] = pd.to_datetime(data['Time Period End Date']).dt.date
         return data
     except FileNotFoundError:
         print("Error: The file was not found.")
@@ -16,10 +15,11 @@ def load_data(filepath):
 
 def parse_date(date_string):
     try:
-        return datetime.datetime.strptime(date_string, "%Y-%m-%d").date()
+        date = pd.to_datetime(date_string).date()
     except ValueError:
         print("Invalid date format. Please use YYYY-MM-DD.")
         return None
+    return date
 
 
 def main():
@@ -31,7 +31,7 @@ def main():
 
     # Insert data into B+ Tree
     for index, row in data.iterrows():
-        bpt.insert(row['Time Period Start Date'], row)
+        bpt.insert(parse_date(row['Time Period Start Date']), row)
 
     # Ask user for a date to search
     date_input = input("Enter a date to search (YYYY-MM-DD): ")

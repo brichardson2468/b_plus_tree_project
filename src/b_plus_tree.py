@@ -54,7 +54,7 @@ class BPlusTree:
             return None
         
     def search_date_in_range(self, target_date):
-        target_date = pd.Timestamp(target_date)
+        target_date = pd.to_datetime(target_date).date()
         print("Target date for search:", target_date)
         current_node = self.root
 
@@ -71,7 +71,7 @@ class BPlusTree:
         results = []
         while current_node:
             # Assuming the first key in a node gives the minimum date
-            if current_node.keys and pd.Timestamp(current_node.keys[0]) > target_date:
+            if current_node.keys and (current_node.keys[0]) > target_date:
                 print("Stopping search, keys in node are past the target date.")
                 break
 
@@ -79,8 +79,8 @@ class BPlusTree:
                 #print("Leaf node key:", key)  # Check keys in the leaf node
                 if key in current_node.records:
                     for record in current_node.records[key]:
-                        start_date = pd.Timestamp(record['Time Period Start Date'])
-                        end_date = pd.Timestamp(record['Time Period End Date'])
+                        start_date = pd.to_datetime(record['Time Period Start Date']).date()
+                        end_date = pd.to_datetime(record['Time Period End Date']).date()
                         #print("Start Date:", start_date, "End Date:", end_date)
                         if start_date <= target_date <= end_date:
                             results.append(record)

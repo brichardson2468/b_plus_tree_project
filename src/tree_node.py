@@ -11,7 +11,6 @@ class TreeNode:
         self.parent = parent
 
     def insert(self, key, record=None, child=None):
-        print(f"Attempting to insert key: {key}")
         # Find the position where the new key should be inserted
         i = 0
         while i < len(self.keys) and self.keys[i] < key:
@@ -39,7 +38,6 @@ class TreeNode:
         mid_key = self.keys[mid_index]
 
         # Create a new node
-        print(f"Splitting node at key: {mid_key}")
         new_node = TreeNode(is_leaf=self.is_leaf, parent=self.parent)
         new_node.keys = self.keys[mid_index + 1:]
         self.keys = self.keys[:mid_index]
@@ -50,7 +48,6 @@ class TreeNode:
             self.children = self.children[:mid_index]
             new_node.next = self.next
             self.next = new_node
-            print(f"Leaf node split: new node keys {new_node.keys}")
         else:
             # If it's not a leaf, move the child references
             new_node.children = self.children[mid_index + 1:]
@@ -58,8 +55,6 @@ class TreeNode:
 
             for child in new_node.children: # Update the parent reference of the child nodes
                 child.parent = new_node
-            print(f"Internal node split: new node keys {new_node.keys}")
-        
         return new_node, mid_key
 
     def is_full(self): # Helper method to check if the node is full

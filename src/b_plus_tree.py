@@ -29,29 +29,6 @@ class BPlusTree:
         # Step 3: Check if the node has overflowed and handle splits
         if leaf.is_full():
             self._handle_split(leaf)
-
-    def search(self, key): # Search for a key in the B+ tree and return its associated record
-        current_node = self.root
-        print("Starting search at root.")
-        while not current_node.is_leaf:
-            i = 0
-            while i < len(current_node.keys) and key >= current_node.keys[i]:
-                i += 1
-            print(f"Moving to child {i} at level with keys {current_node.keys}")
-            current_node = current_node.children[i]
-            if current_node is None:
-                return None
-        # At the leaf node, look for the key
-        print(f"At leaf node with keys {current_node.keys}")
-        if key in current_node.keys:
-            if key in current_node.records:
-                return current_node.records[key]
-            else:
-                print(f"Key {key} not found in records.")
-                return None
-        else:
-            print(f"Key {key} not found in leaf node with keys {current_node.keys}.")
-            return None
         
     def search_date_in_range(self, target_date):
         target_date = pd.to_datetime(target_date).date()

@@ -3,8 +3,9 @@
 ### Motivation
 My motivation for this project was incorporating a data set I was using for my data visualization class. It's a dataset that tracks U.S. Mental Health statistics starting at the beginning of the Covid-19 pandemic and extends to the current day. I chose this dataset because prior to starting my computer science program, I worked in the mental health field for over a decade and saw the effects first hand of the pandemic on worsening mental health. I wanted a way to visualize this. So the goal was to create this project so that I could more quickly change the search range of the data in order to more quickly visualize the data.
 ### About B+ Trees
+A B+ tree is a type of self-balancing tree data structure that maintains sorted data in a way that allows for efficient insertion, deletion, and sequential access operations. It differs from other binary search trees by having nodes that can hold more than two children, which is particularly effective in minimizing disk I/O operations due to its block-oriented storage organization. This tree structure keeps keys in its internal nodes but does not store actual data records, which are instead housed in the leaf nodes, all of which are linked, thus providing rapid in-order traversal of entries.
 
-
+For temporal data, such as dates or timestamps, B+ trees are advantageous because they can effectively handle range queries, which are common with time-based data. This capability allows for quick searches over intervals (e.g., finding all events within a specific date range), making B+ trees a good choice for databases and file systems where such queries are frequent.
 # Project Description
 
 # Installation

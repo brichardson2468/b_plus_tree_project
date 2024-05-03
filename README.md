@@ -1,11 +1,7 @@
 # B+ Tree Project
-
 ## Data Structures Semester Project on B+ Trees
-
 ### Motivation
-
 My motivation for this project was incorporating a data set I was using for my data visualization class. It's a dataset that tracks U.S. Mental Health statistics starting at the beginning of the Covid-19 pandemic and extends to the current day. I chose this dataset because prior to starting my computer science program, I worked in the mental health field for over a decade and saw the effects first hand of the pandemic on worsening mental health. I wanted a way to visualize this. So the goal was to create this project so that I could more quickly change the search range of the data in order to more quickly visualize the data.
-
 ### About B+ Trees
 
 
@@ -20,5 +16,9 @@ My motivation for this project was incorporating a data set I was using for my d
 ### 3. Install the required Python packages:
     pip install -r requirements.txt
 # Usage
-
-# Features
+## Run the application using:
+    python src/main.py
+### The terminal interface will guide you on the features:
+-Search Range: Input a range of dates to narrow down the data you want to visualize
+-Data Visualization: The searched for data will auto-populate into the notebook so you can quickly run all cells and see the visualizations
+-Feel free to play around with the visualizations and make alterations as you see fit

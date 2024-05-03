@@ -4,7 +4,6 @@ import pandas as pd
 def load_data(filepath):
     try:
         data = pd.read_csv(filepath)
-        print("Data loaded successfully!")
         data['Time Period Start Date'] = pd.to_datetime(data['Time Period Start Date']).dt.date
         data['Time Period End Date'] = pd.to_datetime(data['Time Period End Date']).dt.date
         return data
@@ -24,7 +23,7 @@ def parse_date(date_string):
 
 def main():
     # Load data
-    data = load_data('data/practice_dataset.csv')
+    data = load_data('data/project_dataset.csv')
 
     # Initialize B+ Tree with max_keys set to 4 (adjust as necessary)
     bpt = BPlusTree(max_keys=4)

@@ -49,6 +49,8 @@ def main():
             results_df = pd.DataFrame(search_result)
             # Ensure the columns match the original data
             results_df = results_df[data.columns]
+            # Sort the DataFrame based on the date columns or other criteria
+            results_df.sort_values(by=['Time Period Start Date'], inplace=True)
             results_path = 'data/search_results.csv'
             results_df.to_csv(results_path, index=False)
             print(f"Search results saved to {results_path}")

@@ -30,20 +30,20 @@ class BPlusTree:
         if leaf.is_full():
             self._handle_split(leaf)
 
-    def search_range(self, start_key, end_key): 
+    def search_range(self, start_date, end_date): 
         # Search for keys within a given range and return their associated records
         current_node = self.root
         results = []
         # Traverse to the leaf node for the start_key
         while not current_node.is_leaf:
             i = 0
-            while i < len(current_node.keys) and start_key >= current_node.keys[i]:
+            while i < len(current_node.keys) and start_date >= current_node.keys[i][0]:
                 i += 1
             current_node = current_node.children[i]
         # Collect all records from start_key to end_key
         while current_node:
             for key, record in zip(current_node.keys, current_node.records):
-                if start_key <= key <= end_key:
+                if start_date <= key[0] and key[1] <= end_date:
                     results.append(record)
             current_node = current_node.next
         return results

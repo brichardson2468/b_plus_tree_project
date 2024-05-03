@@ -47,8 +47,9 @@ def main():
         if search_result:
             # Convert search_result to DataFrame
             results_df = pd.DataFrame(search_result)
-            results_path = 'data/search_results.csv'
             # Ensure the columns match the original data
+            results_df = results_df[data.columns]
+            results_path = 'data/search_results.csv'
             results_df.to_csv(results_path, index=False)
             print(f"Search results saved to {results_path}")
         else:

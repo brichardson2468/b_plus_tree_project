@@ -1,5 +1,4 @@
 from tree_node import TreeNode
-import pandas as pd
 
 
 class BPlusTree:

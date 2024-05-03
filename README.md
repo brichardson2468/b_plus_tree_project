@@ -18,7 +18,19 @@ My motivation for this project was incorporating a data set I was using for my d
 # Usage
 ## Run the application using:
     python src/main.py
-### The terminal interface will guide you on the features:
--Search Range: Input a range of dates to narrow down the data you want to visualize
--Data Visualization: The searched for data will auto-populate into the notebook so you can quickly run all cells and see the visualizations
--Feel free to play around with the visualizations and make alterations as you see fit
+### After starting the program, you will be prompted to input a start and end date. The program will then search for records within that date range in the B+ tree and provide the results.
+## Example
+    Enter the start date you want (YYYY-MM-DD): 2022-01-01
+    Enter the end date you want (YYYY-MM-DD): 2022-12-31
+### This will search for all records between January 1, 2022, and December 31, 2022. The search results will be saved to data/search_results.csv, and you can then visualize these results immediately by running all cells in the visualization notebook.
+# Features
+## Data Loading
+### Loads data from a CSV file, converting date strings into date objects.
+## Interactive Search
+### Allows users to input a date range and retrieve data that falls within this range.
+## Data Output
+### Outputs the search results into a CSV file, allowing for further analysis or visualization.
+## Data Visualization
+### Ready made visualizations to check out based on the dates you chose
+## Error Handling
+### Includes basic error handling for file not found and input validation.

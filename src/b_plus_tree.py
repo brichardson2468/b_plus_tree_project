@@ -44,7 +44,6 @@ class BPlusTree:
         # Collect all records from start_key to end_key
             print(f"Current node keys: {current_node.keys}")
             for key in current_node.keys:
-                print(f"Checking key: {key}, Record exists: {key in current_node.records}")
                 if start_date <= key[1] and key[0] <= end_date:
                     if key in current_node.records:
                         results.extend(current_node.records[key])
